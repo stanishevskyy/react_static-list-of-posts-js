@@ -1,8 +1,22 @@
 import './App.scss';
 
-// import postsFromServer from './api/posts.json';
-// import commentsFromServer from './api/comments.json';
-// import usersFromServer from './api/users.json';
+import postsFromServer from './api/posts.json';
+import commentsFromServer from './api/comments.json';
+import usersFromServer from './api/users.json';
+
+function findUser(userId) {
+  return usersFromServer.find(el => el.id === userId);
+}
+
+function findComments(id) {
+  return commentsFromServer.filter(el => el.postId === id);
+}
+
+export const posts = postsFromServer.map(post => ({
+  ...post,
+  user: findUser(post.userId),
+  coments: findComments(post.id),
+}));
 
 export const App = () => (
   <section className="App">
